@@ -1,50 +1,26 @@
-import React, { Component } from "react"
-import logo from "./logo.svg"
-import "./App.css"
+import "./App.css";
+import { Route, Switch } from "react-router-dom";
+import Header from "./component/HEADER";
+import Home from "./page/HOME";
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
-  }
+function App() {
+  return (
+    <div>
+      <Header />
 
-  handleClick = api => e => {
-    e.preventDefault()
-
-    this.setState({ loading: true })
-    fetch("/.netlify/functions/" + api)
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
-
-  render() {
-    const { loading, msg } = this.state
-
-    return (
-      <p>
-        <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
-  }
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/about-me">about me</Route>
+        <Route path="/ProjetPaint">ceci est le projet paint</Route>
+        <Route path="/ProjetCineWave">ceci est le projet Ciné-Wave</Route>
+        <Route path="/ProjetReact">ceci est le projet E-Market</Route>
+        <Route path="/cv">mon CV</Route>
+        <Route path="*">Cette page n'existe pas </Route>
+      </Switch>
+    </div>
+  );
 }
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <LambdaDemo />
-        </header>
-      </div>
-    )
-  }
-}
-
-export default App
+export default App;
